@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample</title>
+    <script>
+
+    </script>
+    <style type="text/css">
+        body {
+            background: #040404;
+            color: white;
+        }
+
+        p {
+            font-size: 24px;
+            font-style: normal;
+            font-family: monospace;
+            letter-spacing: 2px;
+            left: 50%;
+            margin-left: -215px;
+            margin-top: -24px;
+            top: 50%;
+            position: absolute;
+        }
+
+        .page_actions {
+            position: fixed;
+            left: 8vw;
+            top: 2%;
+        }
+
+        #notes {
+            position: fixed;
+            left: 50%;
+            margin-left: -43vw;
+            top: 5%;
+            width: 80vw;
+            height: 76%;
+            z-index: -10;
+            color: #02ff02;
+            word-spacing: 1px;
+            background-color: #161616;
+            filter: drop-shadow(2px 4px 6px #2f2f2f);
+            border: 5px double #fffefe6e;
+            border-radius: 11px;
+            padding: 30px;
+        }
+
+        .btn {
+            margin-left: 25px;
+            cursor: pointer;
+            user-select: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page_actions">
+        <span class="btn" onclick="clear_text()">clear</span>
+        <span class="btn" onclick="toggleSpeech()">speak</span>
+        <span class="btn" onclick="clear_speech()">clear speech</span>
+    </div>
+    <textarea id="notes"></textarea>
+    <script>
+        let speechUtteranceQue = [];
+        let currentUtteranceIndex = 0;
+        let isSpeaking = false;
+
+        function readContent() {
+            let notes = document.getElementById('notes');
+            const utterance = new SpeechSynthesisUtterance(restoreSplitWords(removeRefCit(notes.value)));
+            console.log(utterance)
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function clear_text() {
+            document.getElementById('notes').value = ""
+        }
+
+        function clear_speech() {
+            let quiet_please = "";
+            const utterance = new SpeechSynthesisUtterance(quiet_please);
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function removeRefCit(text) {
+            const regex = /\[[1-9]+[*]+,[^\]]*\]/g;
+            return text.replace(regex, '\n\n'); // Replace the matched pattern with an empty string
+        }
+
+        function restoreSplitWords(text) {
+            const regex = /(\w+)-(\n?)(\w+)/g;
+            return text.replace(regex, (match, firstPart, newline, secondPart) => {
+                if (newline === '\n') {
+                    return firstPart + secondPart;
+                } else {
+                    return match;
+                }
+            });
+        }
+
+        function toggleSpeech() {
+            if (isSpeaking) {
+                window.speechSynthesis.pause();
+                isSpeaking = false;
+            } else {
+                if (window.speechSynthesis.paused) {
+                    window.speechSynthesis.resume();
+                } else {
+                    readContent();
+                }
+                isSpeaking = true;
+            }
+        }
+    </script>
+</body>
+
+</html>

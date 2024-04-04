@@ -120,7 +120,7 @@
         }
         function findPossibleSections(text) {
             const regex = /\b\d+(\.\d+)*\b/g;
-            return text.replace(regex, (match, p1, offset, fullString) => {
+            return text.replace(regex, (match, group1, offset, fullString) => {
                 const searchStartIndex = Math.max(offset - 20, 0);
                 const textBeforeMatch = fullString.substring(searchStartIndex, offset);
                 // dont replace if this already has a section on it..

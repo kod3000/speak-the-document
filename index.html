@@ -117,6 +117,7 @@
             let quiet_please = "  ";
             const utterance = new SpeechSynthesisUtterance(quiet_please);
             window.speechSynthesis.speak(utterance);
+            window.speechSynthesis.resume();
         }
 
         function removeRefCit(text) {

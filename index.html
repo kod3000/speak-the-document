@@ -61,8 +61,9 @@
         <span class="btn" onclick="clear_text()">clear</span>
         <span class="btn" onclick="toggleSpeech()">speak</span>
         <span class="btn" onclick="clear_speech()">clear speech</span>
+        <div id="plusButtons"></div>
     </div>
-    <textarea id="notes"></textarea>
+    <textarea id="notes"  oninput="updatePlusButtons()" ></textarea>
     <script>
         let speechUtteranceQue = [];
         let currentUtteranceIndex = 0;
@@ -94,9 +95,22 @@
         }
 
         function findPossibleSections(text) {
-            // might want to check if this is a fresh line.. if not then 
+
             const regex = /\b\d+(\.\d+)*\b/g;
-            return text.replace(regex, (match) => "\n\nSection " + match +"\n" );
+            return text.replace(regex, (match, offset, fullString) => {
+                const searchStartIndex = Math.max(offset - 20, 0); 
+                const textBeforeMatch = fullString.substring(searchStartIndex, offset);
+                // dont replace if this already has a section on it..
+                const hasSectionBefore = /Section\s*$/.test(textBeforeMatch) || /Chapter\s*$/.test(textBeforeMatch)
+                if (hasSectionBefore) {
+                    return match;
+                } else {
+                    if(match.includes('.')){
+                        return "\n\nSection " + match + "\n";
+
+                    }
+                }
+            });
         }
 
         function restoreSplitWords(text) {
@@ -123,6 +137,33 @@
                 isSpeaking = true;
             }
         }
+
+        function updatePlusButtons() {
+            const notes = document.getElementById('notes').value;
+            const numberOfButtons = Math.ceil(notes.length / 400);
+            const plusButtonsContainer = document.getElementById('plusButtons');
+            plusButtonsContainer.innerHTML = '';
+            for (let i = 0; i < numberOfButtons; i++) {
+                const button = document.createElement('span');
+                button.textContent = '+';
+                button.className = 'btn';
+                button.onclick = () => removeTextBlock(i);
+                plusButtonsContainer.appendChild(button);
+            }
+        }
+
+        function removeTextBlock(index) {
+            const start = index * 400;
+            const end = start + 400;
+            const notesElement = document.getElementById('notes');
+            let text = notesElement.value;
+            text = text.slice(0, start) + text.slice(end);
+            notesElement.value = text;
+            updatePlusButtons();
+        }
+
+        document.addEventListener('DOMContentLoaded', updatePlusButtons);
+
     </script>
 </body>
 

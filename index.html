@@ -114,6 +114,9 @@
                 isSpeaking = false;
             } 
             window.speechSynthesis.cancel()
+            let quiet_please = "  ";
+            const utterance = new SpeechSynthesisUtterance(quiet_please);
+            window.speechSynthesis.speak(utterance);
         }
 
         function removeRefCit(text) {

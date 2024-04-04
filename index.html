@@ -109,7 +109,11 @@
         }
 
         function clear_speech() {
-            let quiet_please = "";
+            if (isSpeaking) {
+                window.speechSynthesis.pause();
+                isSpeaking = false;
+            } 
+            let quiet_please = "  ";
             const utterance = new SpeechSynthesisUtterance(quiet_please);
             window.speechSynthesis.speak(utterance);
         }

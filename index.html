@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -56,13 +57,15 @@
             cursor: pointer;
             user-select: none;
         }
-        #plusButtons{
+
+        #plusButtons {
             display: inline;
             max-width: 30vw;
             overflow-y: hidden;
             overflow-x: auto;
         }
-        .plusBtn{
+
+        .plusBtn {
             margin-left: 25px;
             cursor: pointer;
             user-select: none;
@@ -85,7 +88,7 @@
         <span class="btn" onclick="clear_speech()">clear speech</span>
         <div id="plusButtons"></div>
     </div>
-    <textarea id="notes"  oninput="updatePlusButtons()" ></textarea>
+    <textarea id="notes" oninput="updatePlusButtons()"></textarea>
     <script>
         let speechUtteranceQue = [];
         let currentUtteranceIndex = 0;
@@ -95,7 +98,7 @@
             let notes = document.getElementById('notes');
             const utterance = new SpeechSynthesisUtterance(findPossibleSections(restoreSplitWords(removeRefCit(notes.value))));
             // console.log(utterance)
-            utterance.addEventListener('end', () => {        
+            utterance.addEventListener('end', () => {
                 isSpeaking = false;
             });
             window.speechSynthesis.speak(utterance);
@@ -115,23 +118,20 @@
             const regex = /\[[1-9]+[*]+,[^\]]*\]/g;
             return text.replace(regex, '\n\n');
         }
-
         function findPossibleSections(text) {
-
             const regex = /\b\d+(\.\d+)*\b/g;
-            return text.replace(regex, (match, offset, fullString) => {
-                const searchStartIndex = Math.max(offset - 20, 0); 
+            return text.replace(regex, (match, p1, offset, fullString) => {
+                const searchStartIndex = Math.max(offset - 20, 0);
                 const textBeforeMatch = fullString.substring(searchStartIndex, offset);
                 // dont replace if this already has a section on it..
-                const hasSectionBefore = /Section\s*$/.test(textBeforeMatch) || /Chapter\s*$/.test(textBeforeMatch)
+                const hasSectionBefore = /Section\s*$/.test(textBeforeMatch) || /Chapter\s*$/.test(textBeforeMatch);
                 if (hasSectionBefore) {
                     return match;
                 } else {
-                    if(match.includes('.')){
+                    if (match.includes('.')) {
                         return "\n\nSection " + match + "\n";
-
-                    }else{
-                        return match
+                    } else {
+                        return match;
                     }
                 }
             });

@@ -53,6 +53,24 @@
             cursor: pointer;
             user-select: none;
         }
+        #plusButtons{
+            display: inline;
+            max-width: 30vw;
+            overflow: auto;
+        }
+        .plusBtn{
+            margin-left: 25px;
+            cursor: pointer;
+            user-select: none;
+            color: limegreen;
+            background-color: black;
+            padding-top: 1px;
+            padding-bottom: 1px;
+            padding-left: 3px;
+            padding-right: 3px;
+            border-radius: 5px;
+            border: 2px solid;
+        }
     </style>
 </head>
 
@@ -146,7 +164,7 @@
             for (let i = 0; i < numberOfButtons; i++) {
                 const button = document.createElement('span');
                 button.textContent = '+';
-                button.className = 'btn';
+                button.className = 'plusBtn';
                 button.onclick = () => removeTextBlock(i);
                 plusButtonsContainer.appendChild(button);
             }

@@ -130,7 +130,7 @@
                 const searchStartIndex = Math.max(offset - 20, 0);
                 const textBeforeMatch = fullString.substring(searchStartIndex, offset);
                 // dont replace if this already has a section on it..
-                const hasSectionBefore = /Section\s*$/.test(textBeforeMatch) || /Chapter\s*$/.test(textBeforeMatch);
+                const hasSectionBefore = /Section\s*$/.test(textBeforeMatch) || /Chapter\s*$/.test(textBeforeMatch) || /Figure\s*$/.test(textBeforeMatch);
                 if (hasSectionBefore) {
                     return match;
                 } else {

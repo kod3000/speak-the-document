@@ -171,6 +171,7 @@
             try{
                 const myClip = await navigator.clipboard.readText();
                 document.getElementById('notes').value = notes + '\n\n\n' +myClip;
+                updatePlusButtons();
             }catch(err){
                 console.log('Failed to get myClip my dudes..');
             }

@@ -166,7 +166,7 @@
             });
         }
 
-        async function addTextFromClipboard(){
+        async function paste_text(){
             const notes = document.getElementById('notes').value;
             try{
                 const myClip = await navigator.clipboard.readText();

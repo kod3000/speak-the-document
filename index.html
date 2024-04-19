@@ -93,8 +93,15 @@
         }
 
         .lower {
-            display: block;
+            display: inline-flex;
             margin-top: 32px;
+            width: 100%;
+            justify-content: space-between;
+        }
+        .speed{
+            display: inline;
+            padding: 10px;
+            margin: auto;
         }
     </style>
 </head>
@@ -117,7 +124,13 @@
                     <div class="clear_actions">
                         <span class="btn" onclick="clear_text()">clear</span>
                     </div>
+
+                <div class="speed" >
+                    <small style="margin-bottom: 5px;display: block;margin-top: -25px;">Voice Rate: <span id="rateDisplay">1</span>x</small>
+                    <label for="rateSlider"></label>
+                    <input type="range" min="0.5" max="2" value="1" step="0.1" id="rateSlider" onchange="updateRate()">
                 </div>
+            </div>
     </div>
     <script>
         let speechUtteranceQue = [];
@@ -131,6 +144,7 @@
             utterance.addEventListener('end', () => {
                 isSpeaking = false;
             });
+            utterance.rate = document.getElementById('rateSlider').value;
             window.speechSynthesis.speak(utterance);
         }
 
@@ -236,6 +250,9 @@
         }
 
         document.addEventListener('DOMContentLoaded', updatePlusButtons);
+        document.getElementById("rateSlider").addEventListener('input', function(){
+            document.getElementById('rateDisplay').textContent = document.getElementById('rateSlider').value;
+        })
 
     </script>
 </body>

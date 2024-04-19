@@ -101,7 +101,7 @@
 
 <body>
     <div class="container">
-                <div class="upper">
+            <div class="upper">
                     <div class="page_actions">
                         <span class="btn" onclick="paste_text()">paste</span>
                         <span class="btn" onclick="toggleSpeech()">speak</span>
@@ -110,9 +110,10 @@
                     </div>
                 </div>
 
-                <textarea id="notes" oninput="updatePlusButtons()"></textarea>
-  
-                <div class="lower">
+            <label for="notes"></label>
+            <textarea id="notes" oninput="updatePlusButtons()"></textarea>
+
+            <div class="lower">
                     <div class="clear_actions">
                         <span class="btn" onclick="clear_text()">clear</span>
                     </div>

@@ -205,7 +205,11 @@
             const notes = document.getElementById('notes').value;
             try {
                 const myClip = await navigator.clipboard.readText();
-                document.getElementById('notes').value = restoreSplitWords(notes) + '\n\n\n' + myClip;
+                if (notes.length !== 0){
+                    document.getElementById('notes').value = notes + '\n\n\n' + myClip;
+                }else{
+                    document.getElementById('notes').value = myClip;
+                }
                 updatePlusButtons();
             } catch (err) {
                 console.log('Failed to get myClip my dudes..');

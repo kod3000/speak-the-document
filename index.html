@@ -1,7 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
+<html lang="en"><head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -90,18 +87,19 @@
 </head>
 
 <body>
+    <div class="container">
     <div class="page_actions">
         <span class="btn" onclick="paste_text()">paste</span>
         <span class="btn" onclick="toggleSpeech()">speak</span>
         <span class="btn" onclick="clear_speech()">clear speech</span>
         <div id="plusButtons"></div>
     </div>
+    <textarea id="notes" oninput="updatePlusButtons()"></textarea>
     <div class="clear_actions">
         <span class="btn" onclick="clear_text()">clear</span>
     </div>
-
-    <textarea id="notes" oninput="updatePlusButtons()"></textarea>
-    <script>
+    </div>
+        <script>
         let speechUtteranceQue = [];
         let currentUtteranceIndex = 0;
         let isSpeaking = false;
@@ -220,6 +218,7 @@
         document.addEventListener('DOMContentLoaded', updatePlusButtons);
 
     </script>
-</body>
 
+
+</body>
 </html>

@@ -87,17 +87,36 @@
 </head>
 
 <body>
-    <div class="container">
-    <div class="page_actions">
+    <div class="container" style="
+    display: block;
+    /* height: 100vh; */
+    padding: 32px;
+    margin: auto;
+    width: fit-content;
+">
+    <div class="upper" style="
+    display: block;
+    width: 100%;
+    height: 5vh;
+    padding: 10px;
+    padding-top: 20px;
+">
+<div class="page_actions">
         <span class="btn" onclick="paste_text()">paste</span>
         <span class="btn" onclick="toggleSpeech()">speak</span>
         <span class="btn" onclick="clear_speech()">clear speech</span>
         <div id="plusButtons"></div>
     </div>
+    <div></div></div>
     <textarea id="notes" oninput="updatePlusButtons()"></textarea>
-    <div class="clear_actions">
+    <div class="lower" style="
+    display: block;
+    margin-top: 32px;
+">
+<div class="clear_actions">
         <span class="btn" onclick="clear_text()">clear</span>
     </div>
+</div>
     </div>
         <script>
         let speechUtteranceQue = [];
@@ -218,7 +237,6 @@
         document.addEventListener('DOMContentLoaded', updatePlusButtons);
 
     </script>
-
 
 </body>
 </html>

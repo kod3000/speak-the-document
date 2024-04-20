@@ -248,8 +248,10 @@
 
         function updatePlusButtons() {
             const notes = document.getElementById('notes').value;
-            const wordCount = notes.split(' ');
-            document.getElementById('wordCount').textContent = wordCount.length + ' Words';
+            if (notes.length !== 0){
+                const wordCount = notes.split(' ');
+                document.getElementById('wordCount').textContent = wordCount.length + ' Words';
+            }
             const numberOfButtons = Math.ceil(notes.length / 400);
             const plusButtonsContainer = document.getElementById('plusButtons');
             plusButtonsContainer.innerHTML = '';

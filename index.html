@@ -209,7 +209,7 @@
 
         async function paste_text() {
             const notes = document.getElementById('notes').value;
-            if (notes === lastRead) return; // lets not double paste
+            if (notes === lastRead && lastRead !== '') return; // lets not double paste
             try {
                 lastRead = notes;
                 const myClip = await navigator.clipboard.readText();

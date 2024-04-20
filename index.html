@@ -164,6 +164,7 @@
         function undo_paste(){
             let notes = document.getElementById('notes').value;
             document.getElementById('notes').value = notes.replaceAll(lastPaste, "")
+            lastPaste = ''; 
             updatePlusButtons()
         }
 

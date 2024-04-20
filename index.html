@@ -103,7 +103,6 @@
             justify-content: space-between;
         }
         .speed{
-            display: inline;
             padding: 10px;
             margin: auto;
         }
@@ -129,10 +128,14 @@
                         <span class="btn" onclick="clear_text()">clear</span>
                     </div>
 
+
                 <div class="speed" >
+                    <section style="display: inline">
                     <small style="margin-bottom: 5px;display: block;margin-top: -25px;">Voice Rate: <span id="rateDisplay">1</span>x</small>
                     <label for="rateSlider"></label>
                     <input type="range" min="1" max="2" value="1" step="0.05" id="rateSlider" onchange="updateRate()">
+                        <small id="wordCount" style="display: block;width: 100%;margin-top: 10px;text-align: right;"></small>
+                    </section>
                 </div>
             </div>
     </div>
@@ -140,10 +143,11 @@
         let speechUtteranceQue = [];
         let currentUtteranceIndex = 0;
         let isSpeaking = false;
+        let lastRead = '';
 
         function readContent() {
             let notes = document.getElementById('notes');
-            const utterance = new SpeechSynthesisUtterance(findPossibleSections(restoreSplitWords(removeRefCit(notes.value))));
+            const utterance = new SpeechSynthesisUtterance(appendEnding(findPossibleSections(restoreSplitWords(removeRefCit(notes.value)))));
             // console.log(utterance)
             utterance.addEventListener('end', () => {
                 isSpeaking = false;
@@ -205,7 +209,9 @@
 
         async function paste_text() {
             const notes = document.getElementById('notes').value;
+            if (notes === lastRead) return; // lets not double paste
             try {
+                lastRead = notes;
                 const myClip = await navigator.clipboard.readText();
                 if (notes.length !== 0){
                     document.getElementById('notes').value = notes + '\n\n\n' + myClip;
@@ -234,8 +240,16 @@
             }
         }
 
+        function appendEnding(text){
+            const finishDoneComplete = "\n\nThis concludes our session.\n\n"
+            text = text.replace(finishDoneComplete, "")
+            return text + finishDoneComplete
+        }
+
         function updatePlusButtons() {
             const notes = document.getElementById('notes').value;
+            const wordCount = notes.split(' ');
+            document.getElementById('wordCount').textContent = wordCount.length + ' Words';
             const numberOfButtons = Math.ceil(notes.length / 400);
             const plusButtonsContainer = document.getElementById('plusButtons');
             plusButtonsContainer.innerHTML = '';

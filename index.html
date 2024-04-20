@@ -126,6 +126,7 @@
             <div class="lower">
                     <div class="clear_actions">
                         <span class="btn" onclick="clear_text()">clear</span>
+                        <span class="btn" onclick="undo_paste()">undo paste</span>
                     </div>
 
 
@@ -143,7 +144,7 @@
         let speechUtteranceQue = [];
         let currentUtteranceIndex = 0;
         let isSpeaking = false;
-        let lastRead = '';
+        let lastPaste = '';
 
         function readContent() {
             let notes = document.getElementById('notes');
@@ -159,6 +160,10 @@
         function clear_text() {
             document.getElementById('notes').value = ""
             updatePlusButtons();
+        }
+        function undo_paste(){
+            let notes = document.getElementById('notes').value;
+            document.getElementById('notes').value = notes.replace(lastPaste, "")
         }
 
         function clear_speech() {
@@ -211,8 +216,8 @@
             const notes = document.getElementById('notes').value;
             try {
                 const myClip = await navigator.clipboard.readText();
-                if (myClip === lastRead && lastRead !== '') return; // lets not double paste
-                lastRead = myClip;
+                if (myClip === lastPaste && lastPaste !== '') return; // lets not double paste
+                lastPaste = myClip;
                 if (notes.length !== 0){
                     document.getElementById('notes').value = notes + '\n\n\n' + myClip;
                 }else{
@@ -222,8 +227,6 @@
             } catch (err) {
                 console.log('Failed to get myClip my dudes..');
             }
-
-
         }
 
         function toggleSpeech() {

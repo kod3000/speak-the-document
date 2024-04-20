@@ -126,7 +126,7 @@
             <div class="lower">
                     <div class="clear_actions">
                         <span class="btn" onclick="clear_text()">clear</span>
-                        <span class="btn" onclick="undo_paste()">undo paste</span>
+                        <span class="btn" style="margin-left:40px" onclick="undo_paste()">undo paste</span>
                     </div>
 
 
@@ -163,7 +163,8 @@
         }
         function undo_paste(){
             let notes = document.getElementById('notes').value;
-            document.getElementById('notes').value = notes.replace(lastPaste, "")
+            document.getElementById('notes').value = notes.replaceAll(lastPaste, "")
+            updatePlusButtons()
         }
 
         function clear_speech() {
@@ -254,6 +255,8 @@
             if (notes.length !== 0){
                 const wordCount = notes.split(' ');
                 document.getElementById('wordCount').textContent = wordCount.length + ' Words';
+            }else{
+                document.getElementById('wordCount').textContent = ''
             }
             const numberOfButtons = Math.ceil(notes.length / 400);
             const plusButtonsContainer = document.getElementById('plusButtons');

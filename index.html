@@ -221,7 +221,7 @@
                 const myClip = await navigator.clipboard.readText();
                 if (myClip === lastPaste && lastPaste !== '') return; // lets not double paste
                 lastPaste = myClip;
-                filteredPaste = restoreSplitWords(myClip)
+                filteredPaste = restoreSplitWords(myClip) + ' fillll'
                 if (notes.length !== 0){
                     document.getElementById('notes').value = notes + '\n\n\n' + filteredPaste;
                 }else{

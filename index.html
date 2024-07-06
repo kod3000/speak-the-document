@@ -205,14 +205,23 @@
         }
 
         function restoreSplitWords(text) {
-            const regex = /(\w+)-(\n?)(\w+)/g;
-            return text.replace(regex, (match, firstPart, newline, secondPart) => {
+            // newline words broken
+            const newlineRegex = /(\w+)-(\n?)(\w+)/g;
+            text = text.replace(newlineRegex, (match, firstPart, newline, secondPart) => {
                 if (newline === '\n') {
                     return firstPart + secondPart;
                 } else {
                     return match;
                 }
             });
+
+            // normal words split with hyphen and space
+            const spaceRegex = /(\w+)- (\w+)/g;
+            text = text.replace(spaceRegex, (match, firstPart, secondPart) => {
+                return firstPart + secondPart;
+            });
+
+            return text;
         }
 
         async function paste_text() {

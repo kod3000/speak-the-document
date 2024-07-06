@@ -145,6 +145,7 @@
         let currentUtteranceIndex = 0;
         let isSpeaking = false;
         let lastPaste = '';
+        let filteredPaste = '';
 
         function readContent() {
             let notes = document.getElementById('notes');
@@ -220,10 +221,11 @@
                 const myClip = await navigator.clipboard.readText();
                 if (myClip === lastPaste && lastPaste !== '') return; // lets not double paste
                 lastPaste = myClip;
+                filteredPaste = restoreSplitWords(myClip)
                 if (notes.length !== 0){
-                    document.getElementById('notes').value = notes + '\n\n\n' + myClip;
+                    document.getElementById('notes').value = notes + '\n\n\n' + filteredPaste;
                 }else{
-                    document.getElementById('notes').value = myClip;
+                    document.getElementById('notes').value = filteredPaste;
                 }
                 updatePlusButtons();
             } catch (err) {
